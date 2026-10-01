@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 from analyze import (compare_last_two_months, describe_change, monthly_totals,
-                     top_expenses)
+                     save_report, top_expenses)
 
 
 def test_monthly_totals_sums_each_month_in_order():
@@ -58,3 +58,21 @@ def test_compare_last_two_months_uses_the_latest_two_months():
 ])
 def test_describe_change(change, expected):
     assert describe_change(change) == expected
+
+
+def test_save_report_writes_a_png(tmp_path):
+    # tmp_path is a fresh temporary folder pytest gives each test.
+    df = pd.DataFrame({
+        "date": pd.to_datetime(["2026-08-03", "2026-08-10", "2026-09-05",
+                                "2026-09-12"]),
+        "category": ["Food", "Fun", "Food", "Fun"],
+        "amount_aed": [100.0, 50.0, 120.0, 40.0],
+    })
+    by_category = (df.groupby("category")["amount_aed"].sum()
+                   .sort_values(ascending=False))
+    path = tmp_path / "report.png"
+
+    save_report(df, by_category, monthly_totals(df),
+                compare_last_two_months(df), path)
+
+    assert path.exists() and path.stat().st_size > 0

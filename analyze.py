@@ -11,6 +11,7 @@ CHART_FILE = "category_chart.png"
 MONTHLY_CHART_FILE = "monthly_chart.png"
 PIE_CHART_FILE = "category_pie.png"
 CHANGE_CHART_FILE = "month_change_chart.png"
+REPORT_FILE = "report.png"
 
 # Chart colours: one blue for the data, quiet greys for text and axes.
 BAR_COLOR = "#2a78d6"
@@ -107,8 +108,8 @@ def print_month_comparison(previous_month, current_month, table):
           f"{current_total:>10,.2f} AED   {total_change}")
 
 
-def save_month_change_chart(previous_month, current_month, table, path):
-    """Save a bar chart of each category's % change since last month.
+def draw_month_change_chart(ax, previous_month, current_month, table):
+    """Draw a bar chart of each category's % change since last month on ax.
 
     Takes the output of compare_last_two_months(). Bars grow right from
     0% when spending went up and left when it went down.
@@ -118,7 +119,6 @@ def save_month_change_chart(previous_month, current_month, table, path):
     changes = data["change"] * 100  # fractions -> percentages
     colors = [UP_COLOR if c > 0 else DOWN_COLOR for c in changes]
 
-    fig, ax = plt.subplots(figsize=(8, 4))
     bars = ax.barh(data.index, changes, height=0.45, color=colors)
 
     # Label each bar with its % and AED change, e.g. "+19% · +231 AED".
@@ -154,10 +154,6 @@ def save_month_change_chart(previous_month, current_month, table, path):
     ax.xaxis.set_visible(False)
     ax.tick_params(axis="y", length=0, labelcolor=LABEL_COLOR, labelsize=11)
 
-    fig.tight_layout()
-    fig.savefig(path, dpi=150)
-    plt.close(fig)
-
 
 def top_expenses(df, n):
     """Return the n most expensive single purchases, biggest first."""
@@ -174,8 +170,8 @@ def print_top_expenses(expenses):
               f"{row.description:<27}{row.amount_aed:>8,.2f} AED")
 
 
-def save_category_chart(by_category, start, end, path):
-    """Save a horizontal bar chart of spend per category as a PNG image.
+def draw_category_chart(ax, by_category, start, end):
+    """Draw a horizontal bar chart of spend per category on ax.
 
     by_category must be sorted largest first; start and end are the
     first and last dates in the data, shown in the subtitle.
@@ -187,7 +183,6 @@ def save_category_chart(by_category, start, end, path):
     data = by_category.iloc[::-1]
     data_shares = shares.iloc[::-1]
 
-    fig, ax = plt.subplots(figsize=(8, 4))
     bars = ax.barh(data.index, data.values, height=0.45, color=BAR_COLOR)
 
     # Write each total and its share just past the end of its bar.
@@ -210,13 +205,9 @@ def save_category_chart(by_category, start, end, path):
     ax.tick_params(axis="y", length=0, labelcolor=LABEL_COLOR, labelsize=11)
     ax.set_xlim(0, data.max() * 1.25)  # leave room for the labels
 
-    fig.tight_layout()
-    fig.savefig(path, dpi=150)
-    plt.close(fig)
 
-
-def save_category_pie(by_category, path):
-    """Save a pie chart of each category's share of total spend as a PNG.
+def draw_category_pie(ax, by_category):
+    """Draw a pie chart of each category's share of total spend on ax.
 
     by_category must be sorted largest first, so the slices run
     clockwise from 12 o'clock, biggest to smallest.
@@ -229,7 +220,6 @@ def save_category_pie(by_category, path):
     labels = [f"{category}\n{share:.0%}"
               for category, share in zip(by_category.index, shares.values)]
 
-    fig, ax = plt.subplots(figsize=(6, 6))
     ax.pie(by_category.values, labels=labels, colors=colors,
            startangle=90, counterclock=False,  # clockwise from the top
            labeldistance=1.15,
@@ -243,20 +233,15 @@ def save_category_pie(by_category, path):
     ax.text(0, 1.06, f"Share of total spend · {total:,.0f} AED",
             transform=ax.transAxes, fontsize=10, color=MUTED_COLOR)
 
-    fig.tight_layout()
-    fig.savefig(path, dpi=150)
-    plt.close(fig)
 
-
-def save_monthly_chart(by_month, path):
-    """Save a line chart of total spend per month as a PNG image.
+def draw_monthly_chart(ax, by_month):
+    """Draw a line chart of total spend per month on ax.
 
     by_month comes from monthly_totals(): month start dates -> totals.
     """
     labels = [f"{month:%b}" for month in by_month.index]  # e.g. "Jul"
     x = range(len(by_month))
 
-    fig, ax = plt.subplots(figsize=(8, 4))
     ax.plot(x, by_month.values, color=BAR_COLOR, linewidth=2,
             marker="o", markersize=8)
 
@@ -288,8 +273,42 @@ def save_monthly_chart(by_month, path):
     ax.set_axisbelow(True)
     ax.tick_params(length=0, labelcolor=LABEL_COLOR, labelsize=11)
 
+
+def save_single_chart(draw_function, args, path, figsize=(8, 4)):
+    """Draw one chart on its own figure and save it as a PNG.
+
+    draw_function is one of the draw_* functions above; args are the
+    values it needs after ax.
+    """
+    fig, ax = plt.subplots(figsize=figsize)
+    draw_function(ax, *args)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
+    plt.close(fig)
+
+
+def save_report(df, by_category, by_month, comparison, path):
+    """Save all four charts on one page as a single PNG, in a 2x2 grid."""
+    start, end = df["date"].min(), df["date"].max()
+
+    # "constrained" layout spaces the charts so titles and labels don't overlap.
+    fig = plt.figure(figsize=(16, 11), layout="constrained")
+    # Extra breathing room: pads are inches around each chart and the page
+    # edge; hspace/wspace are the gaps between rows/columns (fraction of size).
+    fig.get_layout_engine().set(w_pad=0.3, h_pad=0.3, hspace=0.08, wspace=0.05)
+    axes = fig.subplot_mosaic([["category", "pie"],
+                               ["monthly", "change"]])
+
+    draw_category_chart(axes["category"], by_category, start, end)
+    draw_category_pie(axes["pie"], by_category)
+    draw_monthly_chart(axes["monthly"], by_month)
+    draw_month_change_chart(axes["change"], *comparison)
+
+    period = f"{start.day} {start:%b} – {end.day} {end:%b %Y}"
+    fig.suptitle(f"Expense report · {period}", x=0.01, ha="left",
+                 fontsize=18, color=TEXT_COLOR)
+
+    fig.savefig(path, dpi=150, facecolor=BACKGROUND_COLOR)
     plt.close(fig)
 
 
@@ -317,12 +336,16 @@ def main():
     comparison = compare_last_two_months(df)
     print_month_comparison(*comparison)
 
-    save_category_chart(by_category, df["date"].min(), df["date"].max(), CHART_FILE)
-    save_monthly_chart(by_month, MONTHLY_CHART_FILE)
-    save_category_pie(by_category, PIE_CHART_FILE)
-    save_month_change_chart(*comparison, CHANGE_CHART_FILE)
+    start, end = df["date"].min(), df["date"].max()
+    save_single_chart(draw_category_chart, (by_category, start, end), CHART_FILE)
+    save_single_chart(draw_monthly_chart, (by_month,), MONTHLY_CHART_FILE)
+    save_single_chart(draw_category_pie, (by_category,), PIE_CHART_FILE,
+                      figsize=(6, 6))
+    save_single_chart(draw_month_change_chart, comparison, CHANGE_CHART_FILE)
+    save_report(df, by_category, by_month, comparison, REPORT_FILE)
     print(f"\nCharts saved to {CHART_FILE}, {MONTHLY_CHART_FILE}, "
           f"{PIE_CHART_FILE} and {CHANGE_CHART_FILE}")
+    print(f"One-page report saved to {REPORT_FILE}")
 
 
 if __name__ == "__main__":
