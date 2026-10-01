@@ -8,8 +8,9 @@ import pandas as pd
 
 DATA_FILE = "sample_expenses.csv"
 CHART_FILE = "category_chart.png"
+MONTHLY_CHART_FILE = "monthly_chart.png"
 
-# Chart colours: one blue for the bars, quiet greys for text and axes.
+# Chart colours: one blue for the data, quiet greys for text and axes.
 BAR_COLOR = "#2a78d6"
 TEXT_COLOR = "#0b0b0b"
 LABEL_COLOR = "#52514e"
@@ -29,6 +30,15 @@ def average_per_day(df):
     """
     days = (df["date"].max() - df["date"].min()).days + 1
     return df["amount_aed"].sum() / days
+
+
+def monthly_totals(df):
+    """Return total spend per calendar month, oldest month first.
+
+    The index holds the first day of each month (a Timestamp).
+    """
+    months = df["date"].dt.to_period("M").dt.to_timestamp()
+    return df.groupby(months)["amount_aed"].sum().sort_index()
 
 
 def save_category_chart(by_category, start, end, path):
@@ -72,6 +82,51 @@ def save_category_chart(by_category, start, end, path):
     plt.close(fig)
 
 
+def save_monthly_chart(by_month, path):
+    """Save a line chart of total spend per month as a PNG image.
+
+    by_month comes from monthly_totals(): month start dates -> totals.
+    """
+    labels = [f"{month:%b}" for month in by_month.index]  # e.g. "Jul"
+    x = range(len(by_month))
+
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.plot(x, by_month.values, color=BAR_COLOR, linewidth=2,
+            marker="o", markersize=8)
+
+    # Label each point with its total; there are only a few months.
+    for i, amount in zip(x, by_month.values):
+        ax.annotate(f"{amount:,.0f} AED", (i, amount), xytext=(0, 10),
+                    textcoords="offset points", ha="center",
+                    color=TEXT_COLOR, fontsize=10)
+
+    # Title states the takeaway; subtitle gives the context.
+    peak_month = by_month.idxmax()
+    ax.set_title(f"Spending peaked in {peak_month:%B}",
+                 loc="left", fontsize=13, color=TEXT_COLOR, pad=30)
+    first, last = by_month.index[0], by_month.index[-1]
+    ax.text(0, 1.04,
+            f"Total spend per month, AED · {first:%b} – {last:%b %Y}",
+            transform=ax.transAxes, fontsize=10, color=MUTED_COLOR)
+
+    # Start at zero so the gaps between months aren't exaggerated.
+    ax.set_ylim(0, by_month.max() * 1.2)
+    ax.yaxis.set_major_formatter(lambda value, _: f"{value:,.0f}")
+    ax.set_xticks(list(x), labels)
+    ax.set_xlim(-0.3, len(by_month) - 0.7)
+
+    # Keep the axes quiet so the line stands out.
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.spines["bottom"].set_color(AXIS_COLOR)
+    ax.grid(axis="y", color=AXIS_COLOR, linewidth=0.5, alpha=0.6)
+    ax.set_axisbelow(True)
+    ax.tick_params(length=0, labelcolor=LABEL_COLOR, labelsize=11)
+
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+
+
 def main():
     df = load_expenses(DATA_FILE)
 
@@ -90,8 +145,14 @@ def main():
     print(f"  {biggest['amount_aed']:,.2f} AED - {biggest['description']} "
           f"({biggest['category']}, {biggest['date']:%d %b %Y})")
 
+    by_month = monthly_totals(df)
+    print("\nTotal per month:")
+    for month, amount in by_month.items():
+        print(f"  {month:%b %Y}   {amount:>10,.2f} AED")
+
     save_category_chart(by_category, df["date"].min(), df["date"].max(), CHART_FILE)
-    print(f"\nChart saved to {CHART_FILE}")
+    save_monthly_chart(by_month, MONTHLY_CHART_FILE)
+    print(f"\nCharts saved to {CHART_FILE} and {MONTHLY_CHART_FILE}")
 
 
 if __name__ == "__main__":
