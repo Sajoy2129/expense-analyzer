@@ -9,6 +9,7 @@ import pandas as pd
 DATA_FILE = "sample_expenses.csv"
 CHART_FILE = "category_chart.png"
 MONTHLY_CHART_FILE = "monthly_chart.png"
+PIE_CHART_FILE = "category_pie.png"
 
 # Chart colours: one blue for the data, quiet greys for text and axes.
 BAR_COLOR = "#2a78d6"
@@ -16,6 +17,18 @@ TEXT_COLOR = "#0b0b0b"
 LABEL_COLOR = "#52514e"
 MUTED_COLOR = "#898781"
 AXIS_COLOR = "#c3c2b7"
+BACKGROUND_COLOR = "#ffffff"
+
+# One fixed colour per category, so a category keeps its colour even if
+# the spending order changes. The colours are chosen to stay distinct
+# for colour-blind readers.
+CATEGORY_COLORS = {
+    "Bills": "#2a78d6",      # blue
+    "Food": "#eb6834",       # orange
+    "Shopping": "#1baf7a",   # aqua
+    "Fun": "#eda100",        # yellow
+    "Transport": "#e87ba4",  # magenta
+}
 
 
 def load_expenses(path):
@@ -76,6 +89,39 @@ def save_category_chart(by_category, start, end, path):
     ax.xaxis.set_visible(False)
     ax.tick_params(axis="y", length=0, labelcolor=LABEL_COLOR, labelsize=11)
     ax.set_xlim(0, data.max() * 1.25)  # leave room for the labels
+
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+
+
+def save_category_pie(by_category, path):
+    """Save a pie chart of each category's share of total spend as a PNG.
+
+    by_category must be sorted largest first, so the slices run
+    clockwise from 12 o'clock, biggest to smallest.
+    """
+    total = by_category.sum()
+    shares = by_category / total
+    colors = [CATEGORY_COLORS[category] for category in by_category.index]
+
+    # Name and share go outside each slice, so no separate legend is needed.
+    labels = [f"{category}\n{share:.0%}"
+              for category, share in zip(by_category.index, shares.values)]
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    ax.pie(by_category.values, labels=labels, colors=colors,
+           startangle=90, counterclock=False,  # clockwise from the top
+           labeldistance=1.15,
+           wedgeprops={"edgecolor": BACKGROUND_COLOR, "linewidth": 2},
+           textprops={"color": TEXT_COLOR, "fontsize": 11})
+
+    # Title states the takeaway; subtitle gives the context.
+    top_category = by_category.index[0]
+    ax.set_title(f"{top_category} are {shares.iloc[0]:.0%} of all spending",
+                 loc="left", fontsize=13, color=TEXT_COLOR, pad=36)
+    ax.text(0, 1.06, f"Share of total spend · {total:,.0f} AED",
+            transform=ax.transAxes, fontsize=10, color=MUTED_COLOR)
 
     fig.tight_layout()
     fig.savefig(path, dpi=150)
@@ -152,7 +198,9 @@ def main():
 
     save_category_chart(by_category, df["date"].min(), df["date"].max(), CHART_FILE)
     save_monthly_chart(by_month, MONTHLY_CHART_FILE)
-    print(f"\nCharts saved to {CHART_FILE} and {MONTHLY_CHART_FILE}")
+    save_category_pie(by_category, PIE_CHART_FILE)
+    print(f"\nCharts saved to {CHART_FILE}, {MONTHLY_CHART_FILE} "
+          f"and {PIE_CHART_FILE}")
 
 
 if __name__ == "__main__":
