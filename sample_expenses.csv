@@ -1,0 +1,273 @@
+date,category,description,amount_aed
+2026-07-01,Food,Lunch - office cafeteria,30.50
+2026-07-01,Transport,Careem ride,37.83
+2026-07-01,Transport,Nol card top-up,60.93
+2026-07-01,Transport,Parking - RTA,7.18
+2026-07-01,Bills,Rent - studio apartment,4500.00
+2026-07-02,Transport,Careem ride,22.55
+2026-07-03,Food,Shawarma & juice,18.42
+2026-07-03,Transport,Nol card top-up,61.64
+2026-07-04,Fun,Dinner out - Dubai Marina,289.72
+2026-07-05,Food,Lunch - office cafeteria,43.29
+2026-07-05,Food,Talabat delivery,68.68
+2026-07-05,Shopping,Pharmacy - Aster,30.96
+2026-07-05,Fun,Dinner out - Dubai Marina,188.69
+2026-07-05,Bills,DEWA electricity & water,889.88
+2026-07-06,Food,Lunch - office cafeteria,39.41
+2026-07-06,Transport,Careem ride,38.43
+2026-07-07,Food,Coffee - Tim Hortons,18.39
+2026-07-07,Food,Groceries - Carrefour,182.00
+2026-07-07,Transport,Careem ride,33.24
+2026-07-07,Transport,Nol card top-up,96.45
+2026-07-07,Shopping,Noon order,223.16
+2026-07-08,Food,Coffee - Tim Hortons,19.61
+2026-07-08,Food,Groceries - Carrefour,136.05
+2026-07-08,Bills,Etisalat home internet,389.00
+2026-07-09,Food,Coffee - Tim Hortons,14.25
+2026-07-09,Food,Lunch - office cafeteria,36.77
+2026-07-09,Food,Talabat delivery,72.87
+2026-07-09,Transport,Fuel - ENOC,106.66
+2026-07-10,Food,Groceries - Carrefour,75.51
+2026-07-10,Transport,Parking - RTA,10.44
+2026-07-10,Bills,du mobile plan,125.00
+2026-07-11,Food,Coffee - Tim Hortons,14.50
+2026-07-11,Food,Shawarma & juice,29.99
+2026-07-12,Food,Coffee - Tim Hortons,21.57
+2026-07-12,Food,Talabat delivery,52.80
+2026-07-12,Transport,Parking - RTA,13.35
+2026-07-12,Fun,Cinema - VOX,89.63
+2026-07-12,Fun,Dinner out - Dubai Marina,141.58
+2026-07-12,Bills,Gym membership,250.00
+2026-07-13,Food,Lunch - office cafeteria,36.67
+2026-07-13,Food,Talabat delivery,77.97
+2026-07-14,Food,Coffee - Tim Hortons,14.13
+2026-07-14,Food,Lunch - office cafeteria,43.67
+2026-07-14,Shopping,Noon order,209.76
+2026-07-15,Food,Coffee - Tim Hortons,13.15
+2026-07-15,Food,Lunch - office cafeteria,36.06
+2026-07-15,Shopping,Home items - IKEA,360.74
+2026-07-15,Bills,Salik toll top-up,100.00
+2026-07-16,Food,Coffee - Tim Hortons,19.41
+2026-07-16,Food,Groceries - Lulu Hypermarket,59.78
+2026-07-16,Transport,Parking - RTA,6.04
+2026-07-17,Food,Coffee - Tim Hortons,14.50
+2026-07-17,Food,Lunch - office cafeteria,40.60
+2026-07-17,Shopping,Noon order,192.04
+2026-07-18,Food,Talabat delivery,87.33
+2026-07-18,Transport,Careem ride,56.38
+2026-07-18,Shopping,Noon order,72.49
+2026-07-18,Fun,Cinema - VOX,93.11
+2026-07-19,Food,Coffee - Tim Hortons,21.70
+2026-07-19,Food,Lunch - office cafeteria,44.25
+2026-07-19,Food,Groceries - Lulu Hypermarket,106.49
+2026-07-19,Shopping,Clothes - Centrepoint,283.63
+2026-07-19,Fun,Bowling / arcade,119.78
+2026-07-20,Food,Coffee - Tim Hortons,20.48
+2026-07-20,Bills,Netflix subscription,39.00
+2026-07-21,Food,Coffee - Tim Hortons,16.30
+2026-07-22,Food,Talabat delivery,49.69
+2026-07-22,Transport,Nol card top-up,70.72
+2026-07-22,Shopping,Home items - IKEA,352.88
+2026-07-23,Food,Lunch - office cafeteria,33.50
+2026-07-23,Food,Groceries - Carrefour,213.27
+2026-07-23,Food,Talabat delivery,49.95
+2026-07-24,Food,Coffee - Tim Hortons,20.31
+2026-07-24,Transport,Careem ride,47.97
+2026-07-25,Food,Coffee - Tim Hortons,13.38
+2026-07-25,Food,Lunch - office cafeteria,38.88
+2026-07-25,Food,Groceries - Lulu Hypermarket,102.99
+2026-07-25,Transport,Careem ride,37.75
+2026-07-25,Shopping,Pharmacy - Aster,55.18
+2026-07-26,Food,Lunch - office cafeteria,29.39
+2026-07-26,Food,Groceries - Lulu Hypermarket,93.70
+2026-07-26,Transport,Careem ride,39.97
+2026-07-26,Transport,Parking - RTA,10.30
+2026-07-26,Shopping,Noon order,171.40
+2026-07-27,Food,Groceries - Lulu Hypermarket,52.52
+2026-07-27,Shopping,Pharmacy - Aster,35.24
+2026-07-28,Shopping,Clothes - Centrepoint,148.63
+2026-07-29,Food,Coffee - Tim Hortons,19.15
+2026-07-29,Food,Lunch - office cafeteria,38.81
+2026-07-29,Food,Groceries - Lulu Hypermarket,150.42
+2026-07-29,Transport,Careem ride,64.24
+2026-07-30,Food,Coffee - Tim Hortons,21.61
+2026-07-31,Food,Lunch - office cafeteria,42.63
+2026-07-31,Transport,Careem ride,57.99
+2026-07-31,Shopping,Home items - IKEA,429.74
+2026-08-01,Food,Coffee - Tim Hortons,19.20
+2026-08-01,Bills,Rent - studio apartment,4500.00
+2026-08-02,Food,Coffee - Tim Hortons,13.20
+2026-08-02,Food,Talabat delivery,64.05
+2026-08-02,Transport,Parking - RTA,7.11
+2026-08-02,Shopping,Clothes - Centrepoint,197.51
+2026-08-02,Fun,Dinner out - Dubai Marina,276.32
+2026-08-03,Food,Talabat delivery,91.46
+2026-08-03,Transport,Fuel - ENOC,134.06
+2026-08-03,Transport,Parking - RTA,6.39
+2026-08-05,Food,Lunch - office cafeteria,28.48
+2026-08-05,Food,Groceries - Carrefour,60.43
+2026-08-05,Transport,Careem ride,51.23
+2026-08-05,Bills,DEWA electricity & water,698.80
+2026-08-06,Food,Coffee - Tim Hortons,18.48
+2026-08-06,Food,Groceries - Lulu Hypermarket,71.57
+2026-08-07,Food,Coffee - Tim Hortons,16.32
+2026-08-07,Food,Lunch - office cafeteria,30.01
+2026-08-07,Food,Groceries - Carrefour,213.91
+2026-08-07,Transport,Parking - RTA,16.10
+2026-08-08,Food,Groceries - Carrefour,115.67
+2026-08-08,Bills,Etisalat home internet,389.00
+2026-08-09,Food,Coffee - Tim Hortons,13.88
+2026-08-09,Food,Lunch - office cafeteria,40.13
+2026-08-09,Food,Talabat delivery,67.95
+2026-08-09,Fun,Cinema - VOX,119.42
+2026-08-10,Food,Coffee - Tim Hortons,19.17
+2026-08-10,Bills,du mobile plan,125.00
+2026-08-11,Food,Coffee - Tim Hortons,20.21
+2026-08-11,Food,Lunch - office cafeteria,30.97
+2026-08-11,Food,Shawarma & juice,23.08
+2026-08-12,Food,Lunch - office cafeteria,39.89
+2026-08-12,Transport,Parking - RTA,12.04
+2026-08-12,Bills,Gym membership,250.00
+2026-08-13,Food,Lunch - office cafeteria,38.10
+2026-08-13,Food,Groceries - Carrefour,135.12
+2026-08-14,Food,Coffee - Tim Hortons,12.68
+2026-08-14,Transport,Careem ride,47.79
+2026-08-14,Shopping,Noon order,205.15
+2026-08-15,Food,Coffee - Tim Hortons,17.66
+2026-08-15,Food,Groceries - Carrefour,72.63
+2026-08-15,Shopping,Noon order,207.02
+2026-08-15,Bills,Salik toll top-up,100.00
+2026-08-16,Food,Lunch - office cafeteria,32.69
+2026-08-17,Food,Lunch - office cafeteria,37.73
+2026-08-18,Food,Coffee - Tim Hortons,19.47
+2026-08-18,Food,Lunch - office cafeteria,27.64
+2026-08-19,Food,Coffee - Tim Hortons,21.67
+2026-08-19,Transport,Fuel - ENOC,127.56
+2026-08-20,Food,Coffee - Tim Hortons,14.34
+2026-08-20,Food,Lunch - office cafeteria,42.68
+2026-08-20,Food,Talabat delivery,38.79
+2026-08-20,Transport,Parking - RTA,19.14
+2026-08-20,Bills,Netflix subscription,39.00
+2026-08-21,Shopping,Noon order,111.52
+2026-08-22,Food,Coffee - Tim Hortons,18.86
+2026-08-22,Transport,Careem ride,57.86
+2026-08-22,Shopping,Noon order,203.09
+2026-08-22,Fun,Cinema - VOX,102.39
+2026-08-22,Fun,Dinner out - Dubai Marina,276.55
+2026-08-23,Food,Lunch - office cafeteria,42.17
+2026-08-23,Food,Groceries - Carrefour,80.80
+2026-08-23,Food,Talabat delivery,74.66
+2026-08-23,Food,Shawarma & juice,15.22
+2026-08-23,Shopping,Amazon.ae order,269.93
+2026-08-23,Fun,Brunch with friends,250.77
+2026-08-23,Fun,Bowling / arcade,130.49
+2026-08-24,Food,Coffee - Tim Hortons,16.58
+2026-08-24,Food,Groceries - Carrefour,136.64
+2026-08-24,Transport,Nol card top-up,54.04
+2026-08-24,Transport,Parking - RTA,8.40
+2026-08-25,Food,Coffee - Tim Hortons,18.05
+2026-08-25,Food,Lunch - office cafeteria,39.04
+2026-08-25,Transport,Careem ride,39.22
+2026-08-26,Food,Coffee - Tim Hortons,21.23
+2026-08-26,Food,Lunch - office cafeteria,41.64
+2026-08-26,Food,Groceries - Carrefour,75.45
+2026-08-26,Transport,Parking - RTA,9.66
+2026-08-27,Food,Lunch - office cafeteria,36.56
+2026-08-27,Food,Talabat delivery,41.49
+2026-08-28,Food,Coffee - Tim Hortons,21.29
+2026-08-28,Transport,Nol card top-up,93.49
+2026-08-29,Food,Coffee - Tim Hortons,15.41
+2026-08-29,Food,Lunch - office cafeteria,39.43
+2026-08-29,Food,Talabat delivery,38.16
+2026-08-30,Food,Coffee - Tim Hortons,15.95
+2026-08-30,Food,Groceries - Carrefour,108.23
+2026-08-30,Food,Talabat delivery,50.33
+2026-08-30,Transport,Careem ride,53.11
+2026-08-30,Fun,Cinema - VOX,46.41
+2026-08-31,Food,Lunch - office cafeteria,27.30
+2026-08-31,Food,Groceries - Carrefour,111.96
+2026-09-01,Food,Coffee - Tim Hortons,13.68
+2026-09-01,Food,Groceries - Carrefour,141.59
+2026-09-01,Transport,Parking - RTA,7.16
+2026-09-01,Bills,Rent - studio apartment,4500.00
+2026-09-02,Shopping,Amazon.ae order,177.08
+2026-09-03,Food,Coffee - Tim Hortons,16.52
+2026-09-03,Food,Lunch - office cafeteria,41.63
+2026-09-03,Food,Groceries - Carrefour,198.28
+2026-09-04,Food,Coffee - Tim Hortons,12.62
+2026-09-04,Food,Lunch - office cafeteria,42.98
+2026-09-04,Transport,Careem ride,38.57
+2026-09-05,Food,Groceries - Carrefour,75.12
+2026-09-05,Bills,DEWA electricity & water,827.08
+2026-09-06,Fun,Cinema - VOX,50.79
+2026-09-06,Fun,Dinner out - Dubai Marina,258.76
+2026-09-07,Food,Coffee - Tim Hortons,15.37
+2026-09-07,Food,Groceries - Carrefour,120.28
+2026-09-08,Food,Coffee - Tim Hortons,17.34
+2026-09-08,Food,Lunch - office cafeteria,41.17
+2026-09-08,Bills,Etisalat home internet,389.00
+2026-09-09,Food,Groceries - Lulu Hypermarket,159.97
+2026-09-09,Transport,Parking - RTA,11.00
+2026-09-10,Food,Coffee - Tim Hortons,17.02
+2026-09-10,Food,Lunch - office cafeteria,44.89
+2026-09-10,Food,Groceries - Lulu Hypermarket,171.01
+2026-09-10,Shopping,Home items - IKEA,90.90
+2026-09-10,Bills,du mobile plan,125.00
+2026-09-11,Food,Talabat delivery,52.29
+2026-09-11,Transport,Careem ride,37.73
+2026-09-11,Transport,Parking - RTA,18.48
+2026-09-11,Shopping,Noon order,143.38
+2026-09-12,Food,Lunch - office cafeteria,33.33
+2026-09-12,Food,Groceries - Lulu Hypermarket,176.71
+2026-09-12,Food,Talabat delivery,66.56
+2026-09-12,Shopping,Pharmacy - Aster,98.85
+2026-09-12,Bills,Gym membership,250.00
+2026-09-13,Food,Coffee - Tim Hortons,20.14
+2026-09-13,Food,Lunch - office cafeteria,40.58
+2026-09-13,Transport,Careem ride,54.48
+2026-09-13,Transport,Parking - RTA,7.19
+2026-09-13,Shopping,Amazon.ae order,329.35
+2026-09-13,Fun,Brunch with friends,221.39
+2026-09-14,Food,Coffee - Tim Hortons,15.68
+2026-09-15,Food,Coffee - Tim Hortons,15.21
+2026-09-15,Food,Lunch - office cafeteria,38.22
+2026-09-15,Transport,Nol card top-up,93.50
+2026-09-15,Bills,Salik toll top-up,100.00
+2026-09-16,Transport,Careem ride,21.16
+2026-09-17,Transport,Careem ride,52.58
+2026-09-18,Food,Groceries - Carrefour,196.45
+2026-09-18,Transport,Careem ride,50.05
+2026-09-18,Shopping,Amazon.ae order,208.07
+2026-09-19,Food,Talabat delivery,43.33
+2026-09-19,Transport,Careem ride,44.04
+2026-09-19,Fun,Bowling / arcade,147.51
+2026-09-20,Food,Coffee - Tim Hortons,18.80
+2026-09-20,Food,Lunch - office cafeteria,42.56
+2026-09-20,Food,Talabat delivery,92.98
+2026-09-20,Transport,Nol card top-up,56.21
+2026-09-20,Bills,Netflix subscription,39.00
+2026-09-21,Food,Coffee - Tim Hortons,17.03
+2026-09-21,Food,Lunch - office cafeteria,43.83
+2026-09-21,Food,Groceries - Carrefour,165.40
+2026-09-21,Transport,Fuel - ENOC,93.18
+2026-09-22,Food,Coffee - Tim Hortons,18.27
+2026-09-22,Food,Lunch - office cafeteria,44.13
+2026-09-22,Transport,Careem ride,20.82
+2026-09-23,Food,Lunch - office cafeteria,32.41
+2026-09-23,Transport,Careem ride,22.55
+2026-09-24,Food,Coffee - Tim Hortons,19.63
+2026-09-24,Food,Shawarma & juice,29.18
+2026-09-24,Shopping,Amazon.ae order,193.42
+2026-09-25,Food,Lunch - office cafeteria,42.65
+2026-09-25,Transport,Parking - RTA,12.07
+2026-09-26,Food,Lunch - office cafeteria,40.90
+2026-09-26,Transport,Fuel - ENOC,99.59
+2026-09-26,Fun,Brunch with friends,348.12
+2026-09-27,Shopping,Clothes - Centrepoint,184.41
+2026-09-28,Food,Shawarma & juice,29.22
+2026-09-28,Transport,Careem ride,18.89
+2026-09-29,Food,Coffee - Tim Hortons,13.38
+2026-09-29,Food,Lunch - office cafeteria,31.50
+2026-09-30,Food,Coffee - Tim Hortons,17.58
+2026-09-30,Food,Lunch - office cafeteria,44.46
+2026-09-30,Food,Talabat delivery,77.30
