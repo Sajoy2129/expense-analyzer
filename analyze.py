@@ -54,6 +54,21 @@ def monthly_totals(df):
     return df.groupby(months)["amount_aed"].sum().sort_index()
 
 
+def top_expenses(df, n):
+    """Return the n most expensive single purchases, biggest first."""
+    return df.nlargest(n, "amount_aed")
+
+
+def print_top_expenses(expenses):
+    """Print expenses as a numbered table with lined-up columns."""
+    print(f"  {'#':<3}{'Date':<13}{'Category':<11}{'Description':<27}"
+          f"{'Amount':>12}")
+    print("  " + "-" * 66)
+    for rank, row in enumerate(expenses.itertuples(), start=1):
+        print(f"  {rank:<3}{row.date:%d %b %Y}  {row.category:<11}"
+              f"{row.description:<27}{row.amount_aed:>8,.2f} AED")
+
+
 def save_category_chart(by_category, start, end, path):
     """Save a horizontal bar chart of spend per category as a PNG image.
 
@@ -178,7 +193,6 @@ def main():
 
     total = df["amount_aed"].sum()
     by_category = df.groupby("category")["amount_aed"].sum().sort_values(ascending=False)
-    biggest = df.loc[df["amount_aed"].idxmax()]
 
     print(f"Total spent:      {total:,.2f} AED")
     print(f"Average per day:  {average_per_day(df):,.2f} AED")
@@ -187,9 +201,8 @@ def main():
     for category, amount in by_category.items():
         print(f"  {category:<10} {amount:>10,.2f} AED")
 
-    print("\nBiggest single expense:")
-    print(f"  {biggest['amount_aed']:,.2f} AED - {biggest['description']} "
-          f"({biggest['category']}, {biggest['date']:%d %b %Y})")
+    print("\nTop 5 expenses:")
+    print_top_expenses(top_expenses(df, 5))
 
     by_month = monthly_totals(df)
     print("\nTotal per month:")
