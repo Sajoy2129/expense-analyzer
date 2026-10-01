@@ -10,6 +10,7 @@ DATA_FILE = "sample_expenses.csv"
 CHART_FILE = "category_chart.png"
 MONTHLY_CHART_FILE = "monthly_chart.png"
 PIE_CHART_FILE = "category_pie.png"
+CHANGE_CHART_FILE = "month_change_chart.png"
 
 # Chart colours: one blue for the data, quiet greys for text and axes.
 BAR_COLOR = "#2a78d6"
@@ -18,6 +19,8 @@ LABEL_COLOR = "#52514e"
 MUTED_COLOR = "#898781"
 AXIS_COLOR = "#c3c2b7"
 BACKGROUND_COLOR = "#ffffff"
+UP_COLOR = "#e34948"    # red: spent more than last month
+DOWN_COLOR = "#2a78d6"  # blue: spent less than last month
 
 # One fixed colour per category, so a category keeps its colour even if
 # the spending order changes. The colours are chosen to stay distinct
@@ -102,6 +105,58 @@ def print_month_comparison(previous_month, current_month, table):
     total_change = describe_change(current_total / previous_total - 1)
     print(f"  {'Total':<10} {previous_total:>10,.2f} → "
           f"{current_total:>10,.2f} AED   {total_change}")
+
+
+def save_month_change_chart(previous_month, current_month, table, path):
+    """Save a bar chart of each category's % change since last month.
+
+    Takes the output of compare_last_two_months(). Bars grow right from
+    0% when spending went up and left when it went down.
+    """
+    # Reverse so the biggest increase is drawn at the top.
+    data = table.iloc[::-1]
+    changes = data["change"] * 100  # fractions -> percentages
+    colors = [UP_COLOR if c > 0 else DOWN_COLOR for c in changes]
+
+    fig, ax = plt.subplots(figsize=(8, 4))
+    bars = ax.barh(data.index, changes, height=0.45, color=colors)
+
+    # Label each bar with its % and AED change, e.g. "+19% · +231 AED".
+    differences = data["current"] - data["previous"]
+    labels = [f"{c:+.0f}% · {d:+,.0f} AED"
+              for c, d in zip(changes, differences)]
+    ax.bar_label(bars, labels=labels, padding=6, color=TEXT_COLOR, fontsize=10)
+
+    # Title states the takeaway; subtitle gives the context.
+    # Headline the biggest move in either direction, so it's true even
+    # in a month where every category went down.
+    top = table["change"].abs().idxmax()
+    verb = "rose" if table.loc[top, "change"] > 0 else "fell"
+    total_change = table["current"].sum() / table["previous"].sum() - 1
+    current_name = current_month.strftime("%B")
+    ax.set_title(f"{top} {verb} most in {current_name}: "
+                 f"{describe_change(table.loc[top, 'change'])}",
+                 loc="left", fontsize=13, color=TEXT_COLOR, pad=30)
+    ax.text(0, 1.04,
+            f"Change in spend, {current_month.strftime('%b')} vs "
+            f"{previous_month.strftime('%b %Y')} · "
+            f"Total {describe_change(total_change)}",
+            transform=ax.transAxes, fontsize=10, color=MUTED_COLOR)
+
+    # A grey line at 0% marks "no change"; leave room for labels both sides.
+    ax.axvline(0, color=AXIS_COLOR, linewidth=1)
+    low, high = min(changes.min(), 0), max(changes.max(), 0)
+    padding = (high - low) * 0.45
+    ax.set_xlim(low - padding, high + padding)
+
+    # Keep the axes quiet so the bars stand out.
+    ax.spines[["top", "right", "bottom", "left"]].set_visible(False)
+    ax.xaxis.set_visible(False)
+    ax.tick_params(axis="y", length=0, labelcolor=LABEL_COLOR, labelsize=11)
+
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
 
 
 def top_expenses(df, n):
@@ -259,13 +314,15 @@ def main():
     for month, amount in by_month.items():
         print(f"  {month:%b %Y}   {amount:>10,.2f} AED")
 
-    print_month_comparison(*compare_last_two_months(df))
+    comparison = compare_last_two_months(df)
+    print_month_comparison(*comparison)
 
     save_category_chart(by_category, df["date"].min(), df["date"].max(), CHART_FILE)
     save_monthly_chart(by_month, MONTHLY_CHART_FILE)
     save_category_pie(by_category, PIE_CHART_FILE)
-    print(f"\nCharts saved to {CHART_FILE}, {MONTHLY_CHART_FILE} "
-          f"and {PIE_CHART_FILE}")
+    save_month_change_chart(*comparison, CHANGE_CHART_FILE)
+    print(f"\nCharts saved to {CHART_FILE}, {MONTHLY_CHART_FILE}, "
+          f"{PIE_CHART_FILE} and {CHANGE_CHART_FILE}")
 
 
 if __name__ == "__main__":
