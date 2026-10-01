@@ -54,6 +54,56 @@ def monthly_totals(df):
     return df.groupby(months)["amount_aed"].sum().sort_index()
 
 
+def compare_last_two_months(df):
+    """Compare each category's spend in the latest month with the month before.
+
+    Returns (previous_month, current_month, table), where table has one row
+    per category with columns 'previous', 'current' and 'change'. 'change'
+    is a fraction (0.2 means up 20%), sorted biggest increase first.
+    """
+    months = df["date"].dt.to_period("M")
+    # Rows = categories, columns = months. fill_value=0 means a category with
+    # no spending in a month shows 0 instead of a blank.
+    per_month = df.pivot_table(index="category", columns=months,
+                               values="amount_aed", aggfunc="sum",
+                               fill_value=0)
+    previous_month, current_month = per_month.columns[-2:]
+
+    table = pd.DataFrame({
+        "previous": per_month[previous_month],
+        "current": per_month[current_month],
+    })
+    table["change"] = table["current"] / table["previous"] - 1
+    return previous_month, current_month, table.sort_values("change",
+                                                            ascending=False)
+
+
+def describe_change(change):
+    """Turn a fractional change into words, e.g. 0.2 -> 'up 20%'."""
+    if change == float("inf"):  # nothing last month, something this month
+        return "new"
+    if round(change, 2) == 0:
+        return "no change"
+    direction = "up" if change > 0 else "down"
+    return f"{direction} {abs(change):.0%}"
+
+
+def print_month_comparison(previous_month, current_month, table):
+    """Print one line per category plus a total line."""
+    # Months are pandas Periods, which need strftime() rather than f"{:%b}".
+    print(f"\n{current_month.strftime('%b %Y')} vs "
+          f"{previous_month.strftime('%b %Y')}:")
+    for category, row in table.iterrows():
+        print(f"  {category:<10} {row['previous']:>10,.2f} → "
+              f"{row['current']:>10,.2f} AED   {describe_change(row['change'])}")
+
+    previous_total = table["previous"].sum()
+    current_total = table["current"].sum()
+    total_change = describe_change(current_total / previous_total - 1)
+    print(f"  {'Total':<10} {previous_total:>10,.2f} → "
+          f"{current_total:>10,.2f} AED   {total_change}")
+
+
 def top_expenses(df, n):
     """Return the n most expensive single purchases, biggest first."""
     return df.nlargest(n, "amount_aed")
@@ -208,6 +258,8 @@ def main():
     print("\nTotal per month:")
     for month, amount in by_month.items():
         print(f"  {month:%b %Y}   {amount:>10,.2f} AED")
+
+    print_month_comparison(*compare_last_two_months(df))
 
     save_category_chart(by_category, df["date"].min(), df["date"].max(), CHART_FILE)
     save_monthly_chart(by_month, MONTHLY_CHART_FILE)
